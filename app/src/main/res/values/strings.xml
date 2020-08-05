@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FinalProject_lyricpart</string>
+    <string name="ButtongetIn">click here to get in</string>
+    <string name="artist">put artist here</string>
+    <string name="title">put title here</string>
+    <string name="search">search</string>
+    <string name="error">Input error</string>
+    <string name="error1">Get error</string>
+</resources>
