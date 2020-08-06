@@ -3,8 +3,11 @@ package com.example.finalproject_lyricpart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
@@ -45,10 +48,10 @@ public class LyricPart extends AppCompatActivity {
     EditText artist, title1;
     ProgressBar progressBar;
     ArrayList<Lyrics> lyricList = new ArrayList<>();
-    MyAdapter adapter;
     String ForResult;
     TextView txt1,txt2;
     String URLSEC;
+    SQLiteDatabase db;
     SearchView searchView;
 
     @Override
@@ -62,7 +65,7 @@ public class LyricPart extends AppCompatActivity {
         search = (Button) findViewById(R.id.searchBtn);
         artist = (EditText) findViewById(R.id.artistTxt);
         title1 = (EditText) findViewById(R.id.titleTxt);
-        ListView myList = (ListView) findViewById(R.id.resultLst);
+        //ListView myList = (ListView) findViewById(R.id.resultLst);
         txt1=(TextView) findViewById(R.id.TextView1);
         txt2=(TextView) findViewById(R.id.TextView2);
         //progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -90,19 +93,14 @@ public class LyricPart extends AppCompatActivity {
                 //ForResult=get.doInBackground();
                 //assert ForResult != null;
                 if (ForResult!=null) {
-                    Lyrics newLyric = new Lyrics(ForResult);
+                    //Lyrics newLyric = new Lyrics(ForResult);
                     SharedPreferences lyricGeted=getSharedPreferences("lyric",MODE_PRIVATE);
                     String preLyric=lyricGeted.getString("lyric","");
-                    lyricList.add(newLyric);
-
-                    adapter = new MyAdapter();
-                    myList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    myList.setSelection(adapter.getCount() - 1);
                     Intent goToNext=new Intent(LyricPart.this,ShowLyric.class);
                     goToNext.putExtra("lyric",ForResult);
                     goToNext.putExtra("nameA",nameA);
                     goToNext.putExtra("nameT",nameT);
+                    Toast.makeText(LyricPart.this,getResources().getString(R.string.success1),Toast.LENGTH_LONG).show();
                     startActivityForResult(goToNext,30);
 
                 }else{
@@ -113,7 +111,11 @@ public class LyricPart extends AppCompatActivity {
                 Toast.makeText(LyricPart.this,getResources().getString(R.string.error),Toast.LENGTH_LONG).show();
             }
             //Log.i("result:",ForResult);
-
+        });
+        Button goToF=(Button)findViewById(R.id.CheckFavorite);
+        goToF.setOnClickListener(click->{
+            Intent intent=new Intent(LyricPart.this,FavoriteActivity.class);
+            startActivityForResult(intent,30);
         });
     }
 
@@ -147,39 +149,6 @@ public class LyricPart extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
             return e.toString();
-        }
-    }
-
-    protected class MyAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return lyricList.size();
-        }
-
-        @Override
-        public Lyrics getItem(int i) {
-            return lyricList.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            LayoutInflater inflater = getLayoutInflater();
-            View rowView;
-            TextView rowMessage;
-            Lyrics thisRow = getItem(i);
-            rowView = inflater.inflate(R.layout.show, viewGroup, false);
-            rowMessage = rowView.findViewById(R.id.msg);
-            ImageView opt = rowView.findViewById(R.id.img);
-            opt.setImageResource(R.drawable.lyric);
-            //rowMessage.setText(thisRow.getLyric());
-            rowMessage.setText((thisRow.getLyric()));
-            return rowView;
         }
     }
     @Override
