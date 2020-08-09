@@ -44,7 +44,24 @@ public class FavoriteActivity extends AppCompatActivity {
             String lyricData=results.getString(lyricColumnID);
             long idData=results.getLong(idColumnID);
             lyricList.add(new Lyrics(idData,lyricData));
+            adapter=new MyAdapter();
+            myList.setSelection(adapter.getCount()-1);
+            adapter.notifyDataSetChanged();
         }
+
+        adapter = new MyAdapter();
+        myList.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+        myList.setSelection(adapter.getCount() - 1);
+        ContentValues newRow1=new ContentValues();
+        newRow1.put(MyDBOpener.COL_LYRIC,lyrics);
+        long newId1=db.insert(MyDBOpener.TABLE_NAME,null,newRow1);
+        Lyrics newLyric1=new Lyrics(newId1,lyrics);
+        lyricList.add(newLyric1);
+        adapter=new MyAdapter();
+        adapter.notifyDataSetChanged();
+        myList.setSelection(adapter.getCount()-1);
+
         if(flag){
             adapter = new MyAdapter();
             myList.setAdapter(adapter);
