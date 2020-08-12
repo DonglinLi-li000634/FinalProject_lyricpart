@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">FinalProject_lyricpart</string>
+    <string name="ButtongetIn">点击这里进入</string>
+    <string name="ButtonSearch">点击这里在google上搜索</string>
+    <string name="ButtonLike">我喜欢这首歌</string>
+    <string name="ButtonToSearch">回到搜索界面</string>
+    <string name="ButtonGoFavorite">查看喜欢的歌曲</string>
+    <string name="artist">输入歌手</string>
+    <string name="title">输入标题</string>
+    <string name="search">搜索</string>
+    <string name="error">输入错误</string>
+    <string name="error1">获取错误</string>
+    <string name="success1">获取成功</string>
+    <string name="massage1">你喜欢这首歌么?</string>
+    <string name="massage2">是</string>
+    <string name="massage3">否</string>
+    <string name="massage4">你不喜欢这首歌, 试试别的</string>
+    <string name="massage5">你不喜欢这首歌.</string>
+    <string name="massage6">你想要删除这首歌么?</string>
+</resources>
